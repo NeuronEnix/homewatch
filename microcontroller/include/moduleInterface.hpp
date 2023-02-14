@@ -4,5 +4,6 @@ class IModule {
   private:
   public:
     // pure virtual function
-    virtual void run() = 0;
+    virtual void exec() = 0;
+    virtual void suspend() = 0;
 };
