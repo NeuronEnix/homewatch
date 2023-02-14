@@ -1,9 +1,9 @@
 #include <Arduino.h>
 #include <WiFiManager.h>
 
-#include "waterTankModule.hpp"
+#include "module/waterTank/waterTankModule.hpp"
 
-WaterTankModule waterTank;
+waterTankModule::WaterTankModule waterTank;
 WiFiManager wifiManager;
 
 void setup() {

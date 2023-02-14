@@ -1,6 +1,6 @@
 #include<Arduino.h>
 
-class IModule {
+class I_Module {
   private:
   public:
     // pure virtual function

@@ -3,6 +3,14 @@
     "*.tcc": "cpp",
     "ostream": "cpp",
     "typeinfo": "cpp",
-    "istream": "cpp"
+    "istream": "cpp",
+    "array": "cpp",
+    "bitset": "cpp",
+    "deque": "cpp",
+    "list": "cpp",
+    "string": "cpp",
+    "vector": "cpp",
+    "memory": "cpp",
+    "regex": "cpp"
   }
 }
