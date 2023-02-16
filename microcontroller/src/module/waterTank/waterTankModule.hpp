@@ -1,9 +1,11 @@
 #include <Arduino.h>
 #include <NewPing.h>
+#include <WiFiManager.h>
 
 #include "moduleInterface.hpp"
 #include "waterTankContainer.hpp"
 #include "blueprint-waterTank.hpp"
+
 
 using waterTankModule::I_WaterTankContainer;
 using waterTankModule::WaterTankModule;
@@ -15,12 +17,13 @@ class waterTankModule::WaterTankModule: public I_Module
 private:
   NewPing* ultrasonic;
   I_WaterTankContainer* container;
+  WiFiManager wifiManager;
 
 public:
   WaterTankModule();
   ~WaterTankModule();
-  void exec ();
-  void suspend ();
+  void setup ();
+  void loop ();
 };
 
 WaterTankModule::WaterTankModule() {
@@ -33,14 +36,14 @@ WaterTankModule::~WaterTankModule() {
   delete container;
 }
 
-void WaterTankModule::exec () {
+void WaterTankModule::loop () {
   const auto sensorDistanceFromWaterLevel_cm = this->ultrasonic->ping_cm();
   const auto contentLiter = this->container->getContentLiter( sensorDistanceFromWaterLevel_cm );
   const auto contentPercent = this->container->getContentPercent( sensorDistanceFromWaterLevel_cm );
   Serial.printf("Distance: %lu | Liter: %f | Percent: %f\n", sensorDistanceFromWaterLevel_cm, contentLiter, contentPercent );
+  delay( config::loopDelay_ms );
 }
 
-void WaterTankModule::suspend () {
-  // const auto distance = ultrasonic->ping_cm();
-  delay( config::loopDelay_ms );
+void WaterTankModule::setup () {
+  wifiManager.autoConnect("WaterTankAP");
 }
