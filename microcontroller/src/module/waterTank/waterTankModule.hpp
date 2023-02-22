@@ -38,9 +38,13 @@ WaterTankModule::~WaterTankModule() {
 
 void WaterTankModule::loop () {
   const auto sensorDistanceFromWaterLevel_cm = this->ultrasonic->ping_cm();
-  const auto contentLiter = this->container->getContentLiter( sensorDistanceFromWaterLevel_cm );
-  const auto contentPercent = this->container->getContentPercent( sensorDistanceFromWaterLevel_cm );
-  Serial.printf("Distance: %lu | Liter: %f | Percent: %f\n", sensorDistanceFromWaterLevel_cm, contentLiter, contentPercent );
+  this->container->setContentHightBySensorDistance_cm( sensorDistanceFromWaterLevel_cm );
+  Serial.printf(
+    "Distance: %lu | Liter: %f | Percent: %f\n",
+    sensorDistanceFromWaterLevel_cm,
+    this->container->getContentLiter(),
+    this->container->getContentPercent()
+  );
   delay( config::loopDelay_ms );
 }
 

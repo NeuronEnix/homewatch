@@ -23,8 +23,9 @@ namespace waterTankModule
   // Interface
   class I_WaterTankContainer {
   public:
-    virtual float getContentLiter( const u32 waterLevelFromSensor_cm ) = 0;
-    virtual float getContentPercent( const u32 waterLevelFromSensor_cm ) = 0;
+    virtual float getContentLiter() const = 0;
+    virtual float getContentPercent() const = 0;
+    virtual I_WaterTankContainer* setContentHightBySensorDistance_cm( const u32 sensorDistanceFromContentLevel_cm ) = 0;
     virtual ~I_WaterTankContainer() = 0;
   };
 

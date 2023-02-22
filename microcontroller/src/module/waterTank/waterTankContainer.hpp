@@ -11,23 +11,25 @@ public:
   CylindricalWaterTankContainer( float hight_cm, float radius_cm )
     : CylindricalContainer( hight_cm, radius_cm) {}
 
-  float getContentLiter( const u32 sensorDistanceFromContentLevel_cm );
-  float getContentPercent( const u32 sensorDistanceFromContentLevel_cm );
+  CylindricalWaterTankContainer* setContentHightBySensorDistance_cm( const u32 sensorDistanceFromContentLevel_cm );
+  float getContentLiter() const ;
+  float getContentPercent() const ;
   ~CylindricalWaterTankContainer(){}
 
 };
 
-float CylindricalWaterTankContainer::getContentLiter( const u32 sensorDistanceFromContentLevel_cm ) {
+CylindricalWaterTankContainer* CylindricalWaterTankContainer::setContentHightBySensorDistance_cm( const u32 sensorDistanceFromContentLevel_cm ) {
   auto contentHgt = CylindricalContainer::getHight_cm() - sensorDistanceFromContentLevel_cm;
   if ( contentHgt < 0 ) contentHgt = 0;
   CylindricalContainer::setContentHight_cm( contentHgt );
+  return this;
+}
+
+float CylindricalWaterTankContainer::getContentLiter() const {
   return CylindricalContainer::getContentVolume_ltr();
 }
 
-float CylindricalWaterTankContainer::getContentPercent( const u32 sensorDistanceFromContentLevel_cm ) {
-  auto contentHgt = CylindricalContainer::getHight_cm() - sensorDistanceFromContentLevel_cm;
-  if ( contentHgt < 0 ) contentHgt = 0;
-  CylindricalContainer::setContentHight_cm( contentHgt );
+float CylindricalWaterTankContainer::getContentPercent() const {
   return CylindricalContainer::getContentVolume_percent();
 }
 
