@@ -4,22 +4,25 @@
 #include <WiFiManager.h>
 #include "blueprint-waterTank.hpp"
 
-using waterTankModule::WaterTankServer;
 using waterTankModule::I_WaterTankContainer;
+using waterTankModule::WaterTankServer;
 
-class waterTankModule::WaterTankServer {
+class waterTankModule::WaterTankServer
+{
 
 private:
-  ESP8266WebServer* server;
-  I_WaterTankContainer* container;
+  ESP8266WebServer *server;
+  I_WaterTankContainer *container;
   WiFiManager wifiManager;
 
 public:
-  WaterTankServer( I_WaterTankContainer* container ) {
+  WaterTankServer(I_WaterTankContainer *container)
+  {
     this->container = container;
     this->server = new ESP8266WebServer(80);
   }
-  ~WaterTankServer(){
+  ~WaterTankServer()
+  {
     delete container;
     delete server;
   }
@@ -29,8 +32,9 @@ public:
   void handleWaterTankDetail();
 };
 
-void WaterTankServer::handleWaterTankDetail() {
-  
+void WaterTankServer::handleWaterTankDetail()
+{
+
   auto contentLiter = this->container->getContentLiter();
   auto contentPercent = this->container->getContentPercent();
 
@@ -44,19 +48,24 @@ void WaterTankServer::handleWaterTankDetail() {
   server->send(200, "application/json", resBody);
 }
 
-void WaterTankServer::setup() {
+void WaterTankServer::setup()
+{
 
-  IPAddress staticIP; staticIP.fromString(WIFI_STATIC_IP);
-  IPAddress gateway; gateway.fromString(WIFI_GATEWAY);
-  IPAddress subnetMask; subnetMask.fromString(WIFI_SUBNET_MASK);
+  IPAddress staticIP;
+  staticIP.fromString(WIFI_STATIC_IP);
+  IPAddress gateway;
+  gateway.fromString(WIFI_GATEWAY);
+  IPAddress subnetMask;
+  subnetMask.fromString(WIFI_SUBNET_MASK);
   wifiManager.setSTAStaticIPConfig(staticIP, gateway, subnetMask);
   wifiManager.autoConnect("WaterTankAP");
-  
-  server->on("/waterTankDetail", HTTP_GET, [this](){handleWaterTankDetail();});
-  server->begin();
 
+  server->on("/waterTankDetail", HTTP_GET, [this]()
+             { handleWaterTankDetail(); });
+  server->begin();
 }
 
-void WaterTankServer::loop() {
+void WaterTankServer::loop()
+{
   this->server->handleClient();
 }
