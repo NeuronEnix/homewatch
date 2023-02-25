@@ -32,6 +32,8 @@ namespace waterTankModule
   // Helper class
   class WaterTankContainer;
   class CylindricalWaterTankContainer;
+
+  class WaterTankServer;
   
 } // namespace waterTank
 

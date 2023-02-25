@@ -1,9 +1,9 @@
 #include <Arduino.h>
 #include <NewPing.h>
-#include <WiFiManager.h>
 
 #include "moduleInterface.hpp"
 #include "waterTankContainer.hpp"
+#include "waterTankServer.hpp"
 #include "blueprint-waterTank.hpp"
 
 
@@ -11,13 +11,14 @@ using waterTankModule::I_WaterTankContainer;
 using waterTankModule::WaterTankModule;
 using waterTankModule::CylindricalWaterTankContainer;
 using waterTankModule::config;
+using waterTankModule::WaterTankServer;
 
 class waterTankModule::WaterTankModule: public I_Module
 {
 private:
   NewPing* ultrasonic;
   I_WaterTankContainer* container;
-  WiFiManager wifiManager;
+  WaterTankServer* _server;
 
 public:
   WaterTankModule();
@@ -29,6 +30,7 @@ public:
 WaterTankModule::WaterTankModule() {
   this->ultrasonic = new NewPing(config::ultrasonic::triggerPin, config::ultrasonic::echoPin);
   this->container = dynamic_cast<I_WaterTankContainer*>(new CylindricalWaterTankContainer(config::tank::hight_cm, config::tank::radius_cm));
+  this->_server = new WaterTankServer( this->container );
 }
 
 WaterTankModule::~WaterTankModule() {
@@ -45,9 +47,10 @@ void WaterTankModule::loop () {
     this->container->getContentLiter(),
     this->container->getContentPercent()
   );
+  this->_server->loop();
   delay( config::loopDelay_ms );
 }
 
 void WaterTankModule::setup () {
-  wifiManager.autoConnect("WaterTankAP");
+  this->_server->setup();
 }
