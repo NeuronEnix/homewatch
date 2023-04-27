@@ -1,7 +1,7 @@
 import Fastify from "fastify";
 import {handler} from "./index";
 
-function getPath(url: string): string {
+function getPath (url: string): string {
   const queryParamPos = url.indexOf("?");
   if (queryParamPos === -1) return url;
   return url.substring(0, queryParamPos);
@@ -9,6 +9,7 @@ function getPath(url: string): string {
 
 const fastify = Fastify();
 const allowedMethod = [ "GET", "POST" ];
+
 fastify.all("*", async (req, res) => {
 
   if (!allowedMethod.includes(req.method)) return res.send(404);
