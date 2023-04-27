@@ -19,7 +19,7 @@ export async function handler (req: T_Request): Promise<T_Response> {
 
       case "POST /user/signUp": res.body.data = await api.userAPI.signUp(req); break;
       case "POST /user/signIn": res.body.data = await api.userAPI.signIn(req); break;
-      case "POST /user/detail": res.body.data = await api.userAPI.detail(req); break;
+      case "GET /user/detail": res.body.data = await api.userAPI.detail(req); break;
 
       case "GET /waterTank/list": res.body.data = await api.waterTankAPI.list(req); break;
       case "GET /waterTank/detail": res.body.data = await api.waterTankAPI.detail(req); break;
