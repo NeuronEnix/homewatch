@@ -19,7 +19,7 @@
   "rules": {
     "indent": [ "warn", 2, { "SwitchCase": 1 } ],
     "linebreak-style": [ "error", "unix" ],
-    "quotes": [ "error", "double" ],
+    "quotes": [ "warn", "double" ],
     "semi": [ "warn", "always" ],
     "comma-dangle": [ "warn" ],
     "no-unused-vars":  [ "warn" ],
