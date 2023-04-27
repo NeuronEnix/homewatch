@@ -9,8 +9,8 @@ export type T_Request = {
     agent?: string
   },
   headers: { auth?: string },
-  query?: { [key: string]: number | string | boolean },
-  body?: { [key: string]: number | string | object | boolean | null }
+  query: { [key: string]: number | string | boolean },
+  body: { [key: string]: number | string | object | boolean | null }
 }
 
 export type T_Response = {
